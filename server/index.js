@@ -3,6 +3,7 @@ const { ApolloServer } = require('@apollo/server');
 const {expressMiddleware } = require('@apollo/server/express4');
 const bodyParser = require('body-parser');
 const cors=require('cors');
+const {default:axios}=require('axios')
 
 
 
@@ -22,7 +23,7 @@ async function startServer() {
         `,
         resolvers:{
         Query: {
-                getTodos:()=>[{id:'1',title:'Something',completed:true}],
+                getTodos:async()=>(await axios.get('https://jsonplaceholder.typicode.com/todos')).data,
             },
         },
     });
